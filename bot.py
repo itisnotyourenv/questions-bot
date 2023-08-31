@@ -9,6 +9,8 @@ from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
 from tgbot.config import load_config, Config
 from tgbot.handlers import routers_list
 from tgbot.middlewares.config import ConfigMiddleware
+from tgbot.middlewares.database import DatabaseMiddleware
+from infrastructure.database.setup import create_session_pool, create_engine
 from tgbot.services import broadcaster
 
 
@@ -29,7 +31,7 @@ def register_global_middlewares(dp: Dispatcher, config: Config, session_pool=Non
     """
     middleware_types = [
         ConfigMiddleware(config),
-        # DatabaseMiddleware(session_pool),
+        DatabaseMiddleware(session_pool),
     ]
 
     for middleware_type in middleware_types:
@@ -94,7 +96,10 @@ async def main():
 
     dp.include_routers(*routers_list)
 
-    register_global_middlewares(dp, config)
+    engine = create_engine(config.db, echo=True)
+    session_pool = create_session_pool(engine)
+
+    register_global_middlewares(dp, config, session_pool)
 
     await on_startup(bot, config.tg_bot.admin_ids)
     await dp.start_polling(bot)

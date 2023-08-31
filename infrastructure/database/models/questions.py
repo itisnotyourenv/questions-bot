@@ -7,7 +7,7 @@ from .base import Base, TimestampMixin, TableNameMixin
 
 
 class Question(Base, TimestampMixin, TableNameMixin):
-    id: Mapped[int] = mapped_column(BIGINT, primary_key=True, autoincrement=True)
+    question_id: Mapped[int] = mapped_column(BIGINT, primary_key=True, autoincrement=True)
     question_from: Mapped[int] = mapped_column(BIGINT, ForeignKey("users.user_id", ondelete="NO ACTION"))
     question_to: Mapped[int] = mapped_column(BIGINT, ForeignKey("users.user_id", ondelete="NO ACTION"))
     text = mapped_column(String(4096))
