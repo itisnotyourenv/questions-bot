@@ -9,6 +9,6 @@ betterlogging
 # yarl
 
 # # For PostgreSQL sqlalchemy + alembic:
-# sqlalchemy~=2.0
-# alembic~=1.0
-# asyncpg
+sqlalchemy~=2.0
+alembic~=1.0
+asyncpg
