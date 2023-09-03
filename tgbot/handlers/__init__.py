@@ -3,9 +3,11 @@ from .admin import admin_router
 from .echo import echo_router
 from .user import user_router
 from .question import question_router
+from .answers import answer_router
 
 routers_list = [
     # admin_router,
+    answer_router,
     user_router,
     question_router,
     echo_router,  # echo_router must be last

@@ -8,6 +8,8 @@ from infrastructure.database.repo.base import BaseRepo
 
 
 class UserRepo(BaseRepo):
+    model = User
+
     async def get_or_create_user(
         self,
         user_id: int,
@@ -45,11 +47,3 @@ class UserRepo(BaseRepo):
 
         await self.session.commit()
         return result.first()
-
-    async def get_or_none(self, user_id: int) -> Optional[User]:
-        """
-        Returns a user object if it exists in the database.
-        :param user_id: The user's ID.
-        :return: User object, None if it doesn't exist.
-        """
-        return await self.session.get(User, user_id)

@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from infrastructure.database.repo.users import UserRepo
+from infrastructure.database.repo.questions import QuestionsService
 from infrastructure.database.setup import create_engine
 
 
@@ -22,6 +23,13 @@ class RequestsRepo:
         The User repository sessions are required to manage user operations.
         """
         return UserRepo(self.session)
+
+    @property
+    def questions(self) -> QuestionsService:
+        """
+        The Question repository sessions are required to manage question operations.
+        """
+        return QuestionsService(self.session)
 
 
 if __name__ == "__main__":

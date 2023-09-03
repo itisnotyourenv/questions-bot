@@ -4,7 +4,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 from infrastructure.database.repo.requests import RequestsRepo
-from tgbot.misc.states import QuestionDataClass
+from tgbot.misc.states import QuestionStates
 
 user_router = Router()
 
@@ -41,8 +41,8 @@ async def user_start(message: Message, command: CommandObject, repo: RequestsRep
         )
         await message.answer(text)
 
-        await state.set_data({QuestionDataClass.USER_ID_PARAM: command.args})
-        await state.set_state(QuestionDataClass.WAIT_FOR_QUESTION_STATE)
+        await state.set_data({QuestionStates.USER_ID_PARAM: command.args})
+        await state.set_state(QuestionStates.WAIT_FOR_QUESTION_STATE)
         return
 
     greeting_message = (
@@ -51,5 +51,5 @@ async def user_start(message: Message, command: CommandObject, repo: RequestsRep
         "Поделись ей со своими друзьями и подписчиками, чтобы они могли задать тебе вопрос!."
     )
 
-    await message.reply(greeting_message)
+    await message.answer(greeting_message)
     # todo - user method copy_to when we would send message to address

@@ -1,5 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+from tgbot.misc.callback_data import AnswerCallbackData
+
 
 def question_answer_markup(question_id: int):
     markup = InlineKeyboardMarkup(
@@ -7,7 +9,7 @@ def question_answer_markup(question_id: int):
             [
                 InlineKeyboardButton(
                     text="Ответить",
-                    callback_data=f"answer:{question_id}"
+                    callback_data=AnswerCallbackData.answer_callback(question_id),
                 )
             ]
         ]

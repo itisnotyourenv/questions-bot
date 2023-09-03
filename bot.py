@@ -5,6 +5,7 @@ import betterlogging as bl
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
+from aiogram.types import BotCommand, BotCommandScopeDefault
 
 from tgbot.config import load_config, Config
 from tgbot.handlers import routers_list
@@ -95,6 +96,13 @@ async def main():
     dp = Dispatcher(storage=storage)
 
     dp.include_routers(*routers_list)
+
+    await bot.set_my_commands(
+        [
+            BotCommand(command="/start", description="Ссылка"),
+        ],
+        scope=BotCommandScopeDefault(),
+    )
 
     engine = create_engine(config.db, echo=True)
     session_pool = create_session_pool(engine)
