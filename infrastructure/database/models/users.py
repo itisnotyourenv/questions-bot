@@ -1,7 +1,7 @@
 from typing import Optional
 
 from sqlalchemy import String
-from sqlalchemy import text, BIGINT, Boolean, true
+from sqlalchemy import text, BIGINT, Boolean, true, ForeignKey
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 
@@ -36,6 +36,11 @@ class User(Base, TimestampMixin, TableNameMixin):
     full_name: Mapped[str] = mapped_column(String(128))
     active: Mapped[bool] = mapped_column(Boolean, server_default=true())
     language: Mapped[str] = mapped_column(String(10), server_default=text("'en'"))
+    # we will add here info about a user that invited this user for a question
+    referrer_id: Mapped[int] = mapped_column(BIGINT, ForeignKey("users.user_id", ondelete="SET NULL"), nullable=True)
+
+    # todo - learn about relationships
+    # referrer = relationship("User")
 
     def __repr__(self):
         return f"<User {self.user_id} {self.username} {self.full_name}>"

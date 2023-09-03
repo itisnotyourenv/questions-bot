@@ -8,6 +8,8 @@ from infrastructure.database.repo.base import BaseRepo
 
 
 class UserRepo(BaseRepo):
+    model = User
+
     async def get_or_create_user(
         self,
         user_id: int,
