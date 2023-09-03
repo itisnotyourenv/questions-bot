@@ -1,5 +1,5 @@
 from sqlalchemy import String
-from sqlalchemy import BIGINT, ForeignKey, INT
+from sqlalchemy import BIGINT, ForeignKey
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 

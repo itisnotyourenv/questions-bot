@@ -43,6 +43,7 @@ async def user_start(message: Message, command: CommandObject, repo: RequestsRep
 
         await state.set_data({QuestionDataClass.USER_ID_PARAM: command.args})
         await state.set_state(QuestionDataClass.WAIT_FOR_QUESTION_STATE)
+        return
 
     greeting_message = (
         "<b>Твоя ссылка для вопросов</b>:\n"
