@@ -1,7 +1,13 @@
 from PIL import Image, ImageDraw, ImageFont
 
 
-def add_text_to_image(image_path, text):
+def add_text_to_image(text: str, option: str = "1.jpg"):
+    """
+    :param text: text to add to image
+    :param option: option of image
+    :return:
+    """
+    image_path = f"image_generator/images/options/{option}"
     # Открываем изображение
     image = Image.open(image_path)
 
@@ -9,7 +15,9 @@ def add_text_to_image(image_path, text):
     draw = ImageDraw.Draw(image)
 
     # Задаем шрифт и размер текста
-    font = ImageFont.truetype("fonts/cinzel_regular.ttf", 36)  # Укажите путь к файлу шрифта и размер шрифта
+    font_name = "SuperWebcomicBros_Rusbyyakustick_-Regular_0.ttf"
+    # font = ImageFont.truetype("image_generator/fonts/cinzel_regular.ttf", 50)  # Укажите путь к файлу шрифта и размер шрифта
+    font = ImageFont.truetype(f"image_generator/fonts/{font_name}", 50)  # Укажите путь к файлу шрифта и размер шрифта
 
     # Определяем максимальную ширину текста (90% ширины изображения)
     max_text_width = int(image.width * 0.9)
@@ -40,14 +48,17 @@ def add_text_to_image(image_path, text):
     # Рисуем текст на изображении
     for line in lines:
         line_width, line_height = draw.textsize(line, font)
-        draw.text((x, y), line, fill="black", font=font)
+        x = (image_width - line_width) // 2
+        draw.text((x, y), line, fill="white", font=font)
         y += line_height
 
     # Сохраняем измененное изображение
-    image.save("output_image.jpg")  # Укажите путь для сохранения
+    result_path = f"image_generator/images/results/{option}"
+    image.save(result_path)  # Укажите путь для сохранения
+    return result_path
 
 
 if __name__ == "__main__":
-    image_path = "image.jpg"  # Укажите путь к изображению
+    image_path = "1.jpg"  # Укажите путь к изображению
     text = "Ваш очень длинный текст здесь, который автоматически переносится на новую строку, если не помещается на одной строке."  # Замените на нужный текст
-    add_text_to_image(image_path, text)
+    add_text_to_image(text, image_path)
