@@ -1,27 +1,27 @@
 version: '3.3'
 
 services:
-#  bot:
-#    image: "${BOT_IMAGE_NAME}"
-#    container_name: "${BOT_CONTAINER_NAME}"
-#    stop_signal: SIGINT
-#    build:
-#      context: .
-#    working_dir: "/usr/src/app/${BOT_NAME}"
-#    volumes:
-#      - .:/usr/src/app/${BOT_NAME}
-#    command: python3 -m bot
-#    restart: always
-#    env_file:
-#      - ".env"
-#    networks:
-#      - tg_bot
-#
-#    logging:
-#      driver: "json-file"
-#      options:
-#        max-size: "200k"
-#        max-file: "10"
+  bot:
+    image: "${BOT_IMAGE_NAME}"
+    container_name: "${BOT_CONTAINER_NAME}"
+    stop_signal: SIGINT
+    build:
+      context: .
+    working_dir: "/usr/src/app/${BOT_NAME}"
+    volumes:
+      - .:/usr/src/app/${BOT_NAME}
+    command: python3 -m bot
+    restart: always
+    env_file:
+      - ".env"
+    networks:
+      - tg_bot
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
 
   #   To enable postgres uncomment the following lines
   #  http://pgconfigurator.cybertec.at/ For Postgres Configuration

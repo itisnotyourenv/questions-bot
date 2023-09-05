@@ -1,4 +1,6 @@
 aiogram==3.0.0b7
+arq==0.25.0
+Pillow==9.5.0
 environs~=9.0
 redis
 betterlogging

@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional
+from arq.connections import RedisSettings
 
 from environs import Env
 
@@ -144,6 +145,7 @@ class Miscellaneous:
         A string used to hold other various parameters as required (default is None).
     """
 
+    arq_redis_settings: RedisSettings = None
     other_params: str = None
 
 
@@ -189,5 +191,11 @@ def load_config(path: str = None) -> Config:
         tg_bot=TgBot.from_env(env),
         db=DbConfig.from_env(env),
         redis=RedisConfig.from_env(env),
-        misc=Miscellaneous(),
+        misc=Miscellaneous(
+            arq_redis_settings=RedisSettings(
+                host=env.str("REDIS_HOST"),
+                port=env.int("REDIS_PORT"),
+                password=env.str("REDIS_PASSWORD"),
+            )
+        ),
     )
