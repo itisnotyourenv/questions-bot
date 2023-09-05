@@ -1,4 +1,3 @@
-from time import sleep
 import logging
 
 from tgbot.config import load_config
@@ -11,14 +10,14 @@ async def startup(ctx):
     """
     Binds a connection set to the db object.
     """
-    print('startup')
+    logging.info("startup")
 
 
 async def shutdown(ctx):
     """
     Pops the bind on the db object.
     """
-    print('shutdown')
+    logging.info("shutdown")
 
 
 # WorkerSettings defines the settings to use when creating the work,

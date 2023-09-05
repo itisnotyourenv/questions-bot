@@ -12,12 +12,10 @@ bot = Bot(token=config.tg_bot.token)
 
 
 async def start_image_generation(ctx: dict, user_id: int, text: str):
-    print(f"user={user_id}")
-    print(f"text={text}")
     logging.info("Start image generation for user %s", user_id)
     path = generate_image(text)
-    print(path)
+    logging.info("Generated image for user %s saved to %s", user_id, path)
+
     photo = FSInputFile(path)
-
+    # todo - catch exceptions
     await bot.send_photo(user_id, photo)
-
