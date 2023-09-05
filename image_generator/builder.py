@@ -1,7 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 
 
-def add_text_to_image(text: str, option: str = "1.jpg") -> str:
+def generate_image(text: str, option: str = "1.jpg") -> str:
     """
     Add text to an image and save the result.
 
@@ -70,4 +70,4 @@ def add_text_to_image(text: str, option: str = "1.jpg") -> str:
 if __name__ == "__main__":
     your_image_name = "1.jpg"  # Укажите путь к изображению
     your_text = "Ваш очень длинный текст ddd, который автоматически переносится на новую строку, если не помещается на одной строке."  # Замените на нужный текст
-    add_text_to_image(your_text, your_image_name)
+    generate_image(your_text, your_image_name)

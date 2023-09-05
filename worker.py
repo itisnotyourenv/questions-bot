@@ -1,7 +1,5 @@
-import asyncio
-
 from tgbot.config import load_config
-from tgbot.tasks.image_generation import start_image_generation
+from image_generator.tasks.image_generation import start_image_generation
 
 config = load_config()
 
