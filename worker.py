@@ -1,3 +1,6 @@
+from time import sleep
+import logging
+
 from tgbot.config import load_config
 from image_generator.tasks.image_generation import start_image_generation
 
