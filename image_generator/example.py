@@ -1,28 +1,37 @@
 from PIL import Image, ImageDraw, ImageFont
 
 
-def add_text_to_image(text: str, option: str = "1.jpg"):
+def add_text_to_image(text: str, option: str = "1.jpg") -> str:
     """
-    :param text: text to add to image
-    :param option: option of image
-    :return:
-    """
-    image_path = f"image_generator/images/options/{option}"
-    # Открываем изображение
-    image = Image.open(image_path)
+    Add text to an image and save the result.
 
-    # Создаем объект ImageDraw для рисования текста
+    :param text: Text to add to the image.
+    :param option: Option of the image.
+    :return: Path to the saved result image.
+    """
+    # Construct absolute paths for image and font files
+    image_path = f"image_generator/images/options/{option}"
+    font_path = "image_generator/fonts/font1.ttf"
+
+    # Open the image
+    try:
+        image = Image.open(image_path)
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Image file not found at {image_path}")
+
+    # Create an ImageDraw object for drawing text
     draw = ImageDraw.Draw(image)
 
-    # Задаем шрифт и размер текста
-    font_name = "SuperWebcomicBros_Rusbyyakustick_-Regular_0.ttf"
-    # font = ImageFont.truetype("image_generator/fonts/cinzel_regular.ttf", 50)  # Укажите путь к файлу шрифта и размер шрифта
-    font = ImageFont.truetype(f"image_generator/fonts/{font_name}", 50)  # Укажите путь к файлу шрифта и размер шрифта
+    # Load the font and set the font size
+    try:
+        font = ImageFont.truetype(font_path, 50)
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Font file not found at {font_path}")
 
-    # Определяем максимальную ширину текста (90% ширины изображения)
+    # Determine the maximum text width (90% of image width)
     max_text_width = int(image.width * 0.9)
 
-    # Разбиваем текст на строки, учитывая перенос
+    # Split the text into lines, considering line breaks
     lines = []
     line = ""
     for word in text.split():
@@ -35,7 +44,7 @@ def add_text_to_image(text: str, option: str = "1.jpg"):
             line = word + " "
     lines.append(line)
 
-    # Определяем координаты для выравнивания текста по центру
+    # Calculate coordinates for center alignment
     text_height = 0
     for line in lines:
         line_width, line_height = draw.textsize(line, font)
@@ -45,20 +54,20 @@ def add_text_to_image(text: str, option: str = "1.jpg"):
     x = (image_width - max_text_width) // 2
     y = (image_height - text_height) // 2
 
-    # Рисуем текст на изображении
+    # Draw text on the image
     for line in lines:
         line_width, line_height = draw.textsize(line, font)
         x = (image_width - line_width) // 2
         draw.text((x, y), line, fill="white", font=font)
         y += line_height
 
-    # Сохраняем измененное изображение
+    # Save the modified image
     result_path = f"image_generator/images/results/{option}"
-    image.save(result_path)  # Укажите путь для сохранения
+    image.save(result_path)  # Specify the path to save the image
     return result_path
 
 
 if __name__ == "__main__":
-    image_path = "1.jpg"  # Укажите путь к изображению
-    text = "Ваш очень длинный текст здесь, который автоматически переносится на новую строку, если не помещается на одной строке."  # Замените на нужный текст
-    add_text_to_image(text, image_path)
+    your_image_name = "1.jpg"  # Укажите путь к изображению
+    your_text = "Ваш очень длинный текст ddd, который автоматически переносится на новую строку, если не помещается на одной строке."  # Замените на нужный текст
+    add_text_to_image(your_text, your_image_name)
