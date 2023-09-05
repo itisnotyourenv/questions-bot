@@ -28,3 +28,7 @@ alembic downgrade revision_id
 
 Файл с бизнес логикой приложения может называться
 DAO (Data Access Object) или Service (сервис) или Repository (репозиторий).
+
+
+Run worker
+arq worker.WorkerSettings

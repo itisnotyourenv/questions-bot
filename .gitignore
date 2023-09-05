@@ -62,3 +62,7 @@ venv.bak/
 .idea/
 .env
 cache/
+
+image_generator/images/results
+image_generator/fonts
+notes.txt

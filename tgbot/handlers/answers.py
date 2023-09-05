@@ -19,7 +19,6 @@ async def answer_callback_handler(call, repo: RequestsRepo, bot: Bot, state: FSM
     question = await repo.questions.get_or_none(int(question_id))
     await bot.send_message(question.question_from, call.message.text)
 
-
     # todo - добавить кнопку для отмены ответа
     await call.message.answer("Введите ответное сообщение")
 

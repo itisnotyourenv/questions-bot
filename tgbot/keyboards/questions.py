@@ -10,6 +10,12 @@ def question_answer_markup(question_id: int):
                 InlineKeyboardButton(
                     text="Ответить",
                     callback_data=AnswerCallbackData.answer_callback(question_id),
+                ),
+            ],
+            [
+                InlineKeyboardButton(
+                    text="Сгенерировать изображение",
+                    callback_data=AnswerCallbackData.generate_image_callback(question_id),
                 )
             ]
         ]
