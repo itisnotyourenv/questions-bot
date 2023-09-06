@@ -10,7 +10,7 @@ def create_engine(db: DbConfig, echo=False):
         pool_size=20,
         max_overflow=200,
         future=True,
-        echo=echo,
+        echo=True,
     )
     return engine
 

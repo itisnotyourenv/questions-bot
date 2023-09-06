@@ -1,7 +1,7 @@
 from typing import Optional
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import insert
+from sqlalchemy import insert, select
 
 
 class BaseRepo:
@@ -39,3 +39,13 @@ class BaseRepo:
         self.session.add(item)
         await self.session.commit()
         return item
+
+    async def get_by_filter(self, **kwargs) -> model:
+        """
+        Returns a class object if it exists in the database.
+
+        :param kwargs: The item's ID.
+        :return: Class object, None if it doesn't exist.
+        """
+        item = await self.session.execute(select(self.model).filter_by(**kwargs))
+        return item.scalars().first()
