@@ -9,7 +9,7 @@ reply_router = Router()
 
 
 @reply_router.message()
-async def bot_echo(message: types.Message, repo: RequestsRepo, ):
+async def reply_handler(message: types.Message, repo: RequestsRepo):
     logging.info("User %s sent message %s", message.from_user.id, message.text)
     if message.reply_to_message:
 
