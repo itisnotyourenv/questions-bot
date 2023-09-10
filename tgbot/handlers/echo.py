@@ -5,8 +5,6 @@ from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.utils.markdown import hcode
 
-from infrastructure.database.repo.requests import RequestsRepo
-
 echo_router = Router()
 
 
