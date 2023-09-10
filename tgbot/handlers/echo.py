@@ -11,24 +11,9 @@ echo_router = Router()
 
 
 @echo_router.message(F.text, StateFilter(None))
-async def bot_echo(message: types.Message, repo: RequestsRepo):
+async def bot_echo(message: types.Message):
     logging.info("User %s sent message %s", message.from_user.id, message.text)
-    text = ["Ntst", message.text]
-    if message.reply_to_message:
-        print()
-        print()
-        print()
-        print()
-        message_id = message.reply_to_message.message_id
-        print(f"message_id={message_id}")
-        question = await repo.questions.get_by_filter(message_id=message_id)
-        print(question)
-        print()
-        print()
-        print()
-        print()
-
-    await message.answer("\n".join(text))
+    await message.answer("Эхо без состояния")
 
 
 @echo_router.message(F.text)
