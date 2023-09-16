@@ -11,6 +11,7 @@ async def send_question(
         chat_id: int,
         reply_to_message_id: int = None,
 ):
+    original_text = message.text  # cache original text, we use it later to save in db
     message.__config__.allow_mutation = True
     question_text_pattern = "<b>{prefix}</b>\n\n{question}\n\n↩️ <i>Свайпни для ответа.</i>"
 
@@ -33,7 +34,7 @@ async def send_question(
             from_message_id=message.message_id,
             question_to=int(chat_id),
             to_message_id=result.message_id,
-            text=message.text,
+            text=original_text,
         )
         await message.answer("Сообщение отправлено.")
     except TelegramBadRequest:

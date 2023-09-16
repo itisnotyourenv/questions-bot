@@ -15,13 +15,13 @@ def question_answer_markup(question_id: int, author_id: int):
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-                    text="Сгенерировать изображение",
+                    text="📸 Сгенерировать изображение",
                     callback_data=AnswerCallbackData.generate_image_callback(question_id),
                 )
             ],
             [
                 InlineKeyboardButton(
-                    text="Заблокировать автора",
+                    text="⛔️ Заблокировать автора",
                     callback_data=AnswerCallbackData.block_author_callback(author_id),
                 )
             ],
@@ -41,7 +41,7 @@ def unblock_author_markup(author_id: int):
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-                    text="Разблокировать автора",
+                    text="👍 Разблокировать автора",
                     callback_data=AnswerCallbackData.unblock_author_callback(author_id),
                 )
             ],
