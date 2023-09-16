@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from infrastructure.database.repo.users import UserRepo
 from infrastructure.database.repo.questions import QuestionsService
+from infrastructure.database.repo.user_block import UserBlockRepo
 from infrastructure.database.setup import create_engine
 
 
@@ -30,6 +31,13 @@ class RequestsRepo:
         The Question repository sessions are required to manage question operations.
         """
         return QuestionsService(self.session)
+
+    @property
+    def user_block(self) -> UserBlockRepo:
+        """
+        The UserBlock repository sessions are required to manage user_block operations.
+        """
+        return UserBlockRepo(self.session)
 
 
 if __name__ == "__main__":

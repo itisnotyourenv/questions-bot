@@ -1,7 +1,7 @@
 from typing import Optional
 
 from sqlalchemy import String
-from sqlalchemy import text, BIGINT, Boolean, true, ForeignKey
+from sqlalchemy import text, BIGINT, Boolean, true, ForeignKey, INT
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 
@@ -44,3 +44,17 @@ class User(Base, TimestampMixin, TableNameMixin):
 
     def __repr__(self):
         return f"<User {self.user_id} {self.username} {self.full_name}>"
+
+
+class UserBlocked(Base, TimestampMixin):
+    """
+    This class represents a UserBlocked in the application.
+    """
+    __tablename__ = "users_blocked"
+
+    user_blocked_id: Mapped[int] = mapped_column(INT, primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(BIGINT, ForeignKey("users.user_id", ondelete="CASCADE"))
+    blocked_user_id: Mapped[int] = mapped_column(BIGINT, ForeignKey("users.user_id", ondelete="CASCADE"))
+
+    def __repr__(self):
+        return f"<UserBlocked {self.user_id} {self.blocked_user_id}>"

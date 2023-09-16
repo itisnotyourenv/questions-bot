@@ -1,10 +1,14 @@
+import logging
+
 from aiogram import Router
-from aiogram.filters import CommandStart, CommandObject
+from aiogram.filters import CommandStart, CommandObject, Text
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery
 
 from infrastructure.database.repo.requests import RequestsRepo
+from tgbot.keyboards.questions import unblock_author_markup
 from tgbot.misc.states import QuestionStates
+from tgbot.misc.callback_data import AnswerCallbackData
 
 user_router = Router()
 
@@ -35,6 +39,13 @@ async def user_start(message: Message, command: CommandObject, repo: RequestsRep
             await message.reply("Пользователь не найден")
             return
 
+        user_is_blocked = await repo.user_block.get_by_filter(
+            user_id=int(command.args), blocked_user_id=message.from_user.id
+        )
+        if user_is_blocked:
+            await message.reply("Вы заблокированы пользователем")
+            return
+
         text = (
             "<b>Введите ваш вопрос</b>\n\n"
             "Вы также можете использовать фотографию или видео чтобы уточнить вопрос.\n"
@@ -53,3 +64,45 @@ async def user_start(message: Message, command: CommandObject, repo: RequestsRep
 
     await message.answer(greeting_message)
     # todo - user method copy_to when we would send message to address
+
+
+@user_router.callback_query(Text(startswith=AnswerCallbackData.block_author))
+async def clb_block_author_handler(call: CallbackQuery, repo: RequestsRepo):
+    """
+    Handle the user's request to block the author of the question.
+
+    :param: message: The incoming message object from the user.
+    :param: repo: The RequestsRepo object for managing database requests.
+    :return: None
+
+    Notes:
+        - This function blocks the author of the question.
+    """
+    logging.info("User %s sent block author request", call.from_user.id)
+
+    author_id = int(call.data.split("=")[1])
+    await repo.user_block.create(user_id=call.from_user.id, blocked_user_id=author_id)
+    # todo - change button text to "unblock"
+    markup = unblock_author_markup(author_id)
+    await call.message.edit_text(text=call.message.text, reply_markup=markup)
+
+
+@user_router.callback_query(Text(startswith=AnswerCallbackData.unblock_author))
+async def clb_unblock_author_handler(call: CallbackQuery, repo: RequestsRepo):
+    """
+    Handle the user's request to block the author of the question.
+
+    :param: message: The incoming message object from the user.
+    :param: repo: The RequestsRepo object for managing database requests.
+    :return: None
+
+    Notes:
+        - This function blocks the author of the question.
+    """
+    logging.info("User %s sent unblock author request", call.from_user.id)
+
+    author_id = call.data.split("=")[1]
+    await repo.user_block.delete(user_id=call.from_user.id, blocked_user_id=int(author_id))
+    # todo - change button text to "unblock"
+    await call.message.edit_text(text=call.message.text, reply_markup=None)
+    await call.answer("Пользователь разблокирован", show_alert=True)
