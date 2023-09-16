@@ -1,7 +1,7 @@
 from typing import Optional
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import insert, select
+from sqlalchemy import select, delete
 
 
 class BaseRepo:
@@ -49,3 +49,14 @@ class BaseRepo:
         """
         item = await self.session.execute(select(self.model).filter_by(**kwargs))
         return item.scalars().first()
+
+    async def delete(self, **kwargs) -> None:
+        """
+        Deletes a class object in the database.
+
+        :param kwargs: The class object's attributes.
+        :return: The deleted class object.
+        """
+        item = delete(self.model).filter_by(**kwargs)
+        await self.session.execute(item)
+        await self.session.commit()

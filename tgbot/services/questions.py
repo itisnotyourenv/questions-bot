@@ -2,6 +2,7 @@ from aiogram import types
 from aiogram.exceptions import TelegramBadRequest
 
 from infrastructure.database.repo.requests import RequestsRepo
+from tgbot.keyboards.questions import question_answer_markup
 
 
 async def send_question(
@@ -24,7 +25,8 @@ async def send_question(
         message.caption = question_text_pattern.format(prefix=prefix, question=message.caption)
 
     try:
-        result = await message.send_copy(chat_id, reply_to_message_id=reply_to_message_id)
+        markup = question_answer_markup(message.message_id, message.from_user.id)
+        result = await message.send_copy(chat_id, reply_to_message_id=reply_to_message_id, reply_markup=markup)
         await repo.questions.create(
             question_id=message.message_id,
             question_from=message.from_user.id,

@@ -28,6 +28,7 @@ from infrastructure.database.models import (
     Base,
     User,
     Question,
+    UserBlocked,
 ) # noqa
 
 target_metadata = Base.metadata
