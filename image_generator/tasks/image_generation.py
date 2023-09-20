@@ -24,13 +24,14 @@ async def start_image_generation(ctx: dict, user_id: int, text: str):
     logging.info("Start image generation for user %s", user_id)
     try:
         path = generate_image(text)
+        await send_image(user_id, path, caption=text)
     except FileNotFoundError:
         logging.exception("Error while generating image for user %s", user_id)
         return
     logging.info("Generated image for user %s saved to %s", user_id, path)
 
 
-def send_image(user_id: int, image_path: str, caption: str = None):
+async def send_image(user_id: int, image_path: str, caption: str = None):
     """
     Send image to user
 
@@ -42,6 +43,6 @@ def send_image(user_id: int, image_path: str, caption: str = None):
     logging.info("Sending image to user %s", user_id)
     photo = FSInputFile(image_path)
     try:
-        bot.send_photo(user_id, photo, caption=caption)
+        await bot.send_photo(user_id, photo, caption=caption)
     except TelegramBadRequest:
         logging.exception("Error while sending image to user %s", user_id)
