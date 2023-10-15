@@ -6,3 +6,6 @@ down:
 
 upgrade-db:
 	docker exec q_bot alembic upgrade head
+
+logs:
+	docker-compose logs -f

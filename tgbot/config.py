@@ -76,6 +76,7 @@ class TgBot:
 
     token: str
     admin_ids: list[int]
+    bot_url: str
     use_redis: bool
 
     @staticmethod
@@ -86,7 +87,8 @@ class TgBot:
         token = env.str("BOT_TOKEN")
         admin_ids = list(map(int, env.list("ADMINS")))
         use_redis = env.bool("USE_REDIS")
-        return TgBot(token=token, admin_ids=admin_ids, use_redis=use_redis)
+        bot_url = env.str("BOT_URL")
+        return TgBot(token=token, admin_ids=admin_ids, use_redis=use_redis, bot_url=bot_url)
 
 
 @dataclass
