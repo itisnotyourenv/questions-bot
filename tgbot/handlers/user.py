@@ -9,12 +9,16 @@ from infrastructure.database.repo.requests import RequestsRepo
 from tgbot.keyboards.questions import unblock_author_markup
 from tgbot.misc.states import QuestionStates
 from tgbot.misc.callback_data import AnswerCallbackData
+from tgbot.config import load_config
 
 user_router = Router()
+config = load_config()
 
 
 @user_router.message(CommandStart())
-async def user_start(message: Message, command: CommandObject, repo: RequestsRepo, state: FSMContext):
+async def user_start(
+        message: Message, command: CommandObject, repo: RequestsRepo, state: FSMContext,
+):
     """
     Handle the '/start' command and process deep link parameters if provided.
 
@@ -29,13 +33,11 @@ async def user_start(message: Message, command: CommandObject, repo: RequestsRep
           and guides the user to input a question while maintaining the state.
         - If no deep link parameters are provided, a simple welcome message is sent to the user.
     """
-    # example: t.me/q_bot?start=244472550
     # validate that the argument is a number and not the same as the current user
     if command.args and command.args.isdigit() and int(command.args) != message.from_user.id:
         # 1) Check that the user from deeplink exists
         q_user = await repo.users.get_or_none(int(command.args))
         if not q_user:
-            # todo -add greeting message
             await message.reply("Пользователь не найден")
             return
 
@@ -58,12 +60,11 @@ async def user_start(message: Message, command: CommandObject, repo: RequestsRep
 
     greeting_message = (
         "<b>Твоя ссылка для вопросов</b>:\n"
-        f"t.me/stagging_bot?start={message.from_user.id}\n\n"
-        "Поделись ей со своими друзьями и подписчиками, чтобы они могли задать тебе вопрос!."
+        f"{config.tg_bot.bot_url}?start={message.from_user.id}\n\n"
+        "Поделись ей со своими друзьями и подписчиками, чтобы они могли задать тебе вопрос!"
     )
 
     await message.answer(greeting_message)
-    # todo - user method copy_to when we would send message to address
 
 
 @user_router.callback_query(Text(startswith=AnswerCallbackData.block_author))
