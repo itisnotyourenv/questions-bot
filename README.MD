@@ -19,7 +19,7 @@ The bot allows people to send anonymous questions to other people.
 ### Installation
 1) Clone repository
 ```bash
-git clone https://github.com/NFCT-projects/questions-bot
+git clone https://github.com/itisnotyourenv/questions-bot
 ```
 2) Rename `.env.dist` to `.env` and fill in the variables
 3) Run docker-compose
