@@ -1,0 +1,1 @@
+Generated images with questions will be saved in this folder
