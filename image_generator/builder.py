@@ -11,7 +11,7 @@ def generate_image(text: str, option: str = "1.jpg") -> str:
     """
     # Construct absolute paths for image and font files
     image_path = f"image_generator/images/options/{option}"
-    font_path = "image_generator/fonts/font1.ttf"
+    font_path = "image_generator/fonts/Roboto-Thin.ttf"
 
     # Open the image
     try:
