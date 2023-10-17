@@ -63,5 +63,4 @@ venv.bak/
 .env
 cache/
 
-image_generator/images/results
 notes.txt
