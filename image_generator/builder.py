@@ -11,7 +11,7 @@ def generate_image(text: str, option: str = "1.jpg") -> str:
     """
     # Construct absolute paths for image and font files
     image_path = f"image_generator/images/options/{option}"
-    font_path = "image_generator/fonts/Roboto-Thin.ttf"
+    font_path = "image_generator/fonts/Roboto-Light.ttf"
 
     # Open the image
     try:
@@ -24,7 +24,7 @@ def generate_image(text: str, option: str = "1.jpg") -> str:
 
     # Load the font and set the font size
     try:
-        font = ImageFont.truetype(font_path, 50)
+        font = ImageFont.truetype(font_path, 60)
     except FileNotFoundError:
         raise FileNotFoundError(f"Font file not found at {font_path}")
 
@@ -58,7 +58,7 @@ def generate_image(text: str, option: str = "1.jpg") -> str:
     for line in lines:
         line_width, line_height = draw.textsize(line, font)
         x = (image_width - line_width) // 2
-        draw.text((x, y), line, fill="white", font=font)
+        draw.text((x, y), line, fill="black", font=font)
         y += line_height
 
     # Save the modified image
