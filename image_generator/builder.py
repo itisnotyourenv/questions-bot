@@ -10,8 +10,10 @@ def generate_image(text: str, option: str = "1.jpg") -> str:
     :return: Path to the saved result image.
     """
     # Construct absolute paths for image and font files
-    image_path = f"image_generator/images/options/{option}"
-    font_path = "image_generator/fonts/Roboto-Light.ttf"
+    # todo - replace with Path lib
+    root_path = "image_generator/"
+    image_path = f"{root_path}/images/options/{option}"
+    font_path = f"{root_path}/fonts/DejaVuSans-Bold.ttf"
 
     # Open the image
     try:
@@ -69,5 +71,5 @@ def generate_image(text: str, option: str = "1.jpg") -> str:
 
 if __name__ == "__main__":
     your_image_name = "1.jpg"  # Укажите путь к изображению
-    your_text = "Ваш очень длинный текст ddd, который автоматически переносится на новую строку, если не помещается на одной строке."  # Замените на нужный текст
+    your_text = "Ваш очень длинный текст ddd, переносится на новую строку, если не помещается на одной строке."  # Замените на нужный текст
     generate_image(your_text, your_image_name)
