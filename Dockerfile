@@ -6,4 +6,8 @@ WORKDIR /usr/src/app/${BOT_NAME}
 
 COPY requirements.txt /usr/src/app/${BOT_NAME}
 RUN pip install -r /usr/src/app/${BOT_NAME}/requirements.txt
+
+RUN apt-get update -y
+RUN apt-get install -y libraqm-dev
+
 COPY . /usr/src/app/${BOT_NAME}
