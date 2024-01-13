@@ -54,4 +54,4 @@ class UserRepo(BaseRepo):
         Returns the number of users in the database.
         :return: The number of users in the database.
         """
-        return await self.session.scalar(select(func.count(User.user_id)))
+        return await self.session.scalar(select(func.count(self.model.user_id)))
