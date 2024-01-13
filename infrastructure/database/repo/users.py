@@ -2,6 +2,7 @@ from typing import Optional
 
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
+from sqlalchemy import func
 
 from infrastructure.database.models import User
 from infrastructure.database.repo.base import BaseRepo
@@ -47,3 +48,10 @@ class UserRepo(BaseRepo):
 
         await self.session.commit()
         return result.first()
+
+    async def count(self):
+        """
+        Returns the number of users in the database.
+        :return: The number of users in the database.
+        """
+        return await self.session.scalar(select(func.count(User.user_id)))

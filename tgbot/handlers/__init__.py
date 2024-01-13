@@ -8,7 +8,7 @@ from .image import image_router
 from .replies import reply_router
 
 routers_list = [
-    # admin_router,
+    admin_router,
     answer_router,
     user_router,
     image_router,
