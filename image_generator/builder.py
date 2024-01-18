@@ -74,23 +74,20 @@ def calculate_font_size_by_text(text: str) -> int:
     """
     Calculate and return an appropriate font size based on the length of the given text.
     The font size decreases as the text length increases.
+    Conditions:
+        - The maximum font size is 60.
+        - The minimum font size is 10.
+        - The font size decreases by 10 for every 100 characters in the text.
 
     :param text: The text for which the font size needs to be calculated.
     :return: The calculated font size.
     """
     text_length = len(text)
-    if text_length < 100:
-        return 60
-    elif text_length < 200:
-        return 50
-    elif text_length < 300:
-        return 40
-    elif text_length < 400:
-        return 30
-    elif text_length < 500:
-        return 20
-    else:
-        return 10
+
+    # Calculate font size using a formula
+    font_size = max(60 - (text_length // 100) * 10, 10)
+
+    return font_size
 
 
 if __name__ == "__main__":
