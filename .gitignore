@@ -64,3 +64,4 @@ venv.bak/
 cache/
 
 notes.txt
+image_generator/images/results
