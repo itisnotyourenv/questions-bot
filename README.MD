@@ -30,4 +30,4 @@ docker-compose up -d --build
 ```bash
 docker exec q_bot alembic upgrade head
 ```
-Where `q_bot` is the name of the container with the bot
+Replace `q_bot` with the actual name of the container where the bot has been started
