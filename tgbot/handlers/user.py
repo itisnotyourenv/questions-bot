@@ -50,7 +50,8 @@ async def user_start(
 
         text = (
             "<b>Введите ваш вопрос</b>\n\n"
-            "Вы также можете использовать фотографию или видео чтобы уточнить вопрос.\n"
+            "Вы также можете использовать фотографию или видео чтобы уточнить вопрос.\n\n\n"
+            "<a href='https://github.com/itisnotyourenv/questions-bot'>GitHub проекта</a>"
         )
         await message.answer(text)
 
