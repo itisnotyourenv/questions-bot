@@ -104,7 +104,8 @@ async def clb_unblock_author_handler(call: CallbackQuery, repo: RequestsRepo):
     """
     logging.info("User %s sent unblock author request", call.from_user.id)
 
-    message_id = call.data.split("=")[1]
-    await repo.user_block.delete(user_blocked_id=int(message_id))
+    user_block_id = call.data.split("=")[1]
+    await repo.user_block.delete(user_blocked_id=int(user_block_id))
+
     await call.message.edit_text(text=call.message.text, reply_markup=None)
     await call.answer("Пользователь разблокирован", show_alert=True)
