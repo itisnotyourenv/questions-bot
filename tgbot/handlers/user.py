@@ -10,6 +10,7 @@ from tgbot.keyboards.questions import unblock_author_markup
 from tgbot.misc.states import QuestionStates
 from tgbot.misc.callback_data import AnswerCallbackData
 from tgbot.config import load_config
+from tgbot.services.questions import block_user
 
 user_router = Router()
 config = load_config()
@@ -82,10 +83,10 @@ async def clb_block_author_handler(call: CallbackQuery, repo: RequestsRepo):
     """
     logging.info("User %s sent block author request", call.from_user.id)
 
-    author_id = int(call.data.split("=")[1])
-    await repo.user_block.create(user_id=call.from_user.id, blocked_user_id=author_id)
-    # todo - change button text to "unblock"
-    markup = unblock_author_markup(author_id)
+    # get message ID from callback data
+    message_id = int(call.data.split("=")[1])
+    user_block_id = await block_user(call.from_user.id, message_id, repo)
+    markup = unblock_author_markup(user_block_id)
     await call.message.edit_text(text=call.message.text, reply_markup=markup)
 
 
@@ -103,8 +104,7 @@ async def clb_unblock_author_handler(call: CallbackQuery, repo: RequestsRepo):
     """
     logging.info("User %s sent unblock author request", call.from_user.id)
 
-    author_id = call.data.split("=")[1]
-    await repo.user_block.delete(user_id=call.from_user.id, blocked_user_id=int(author_id))
-    # todo - change button text to "unblock"
+    message_id = call.data.split("=")[1]
+    await repo.user_block.delete(user_blocked_id=int(message_id))
     await call.message.edit_text(text=call.message.text, reply_markup=None)
     await call.answer("Пользователь разблокирован", show_alert=True)

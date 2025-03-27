@@ -3,12 +3,11 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from tgbot.misc.callback_data import AnswerCallbackData
 
 
-def question_answer_markup(question_id: int, author_id: int):
+def question_answer_markup(question_id: int):
     """
     The function returns the keyboard with the buttons "Generate image" and "Block author".
 
     :param question_id: ID of the question to be answered.
-    :param author_id: ID of the user who is the author of the question.
     :return: InlineKeyboardMarkup
     """
     markup = InlineKeyboardMarkup(
@@ -22,7 +21,7 @@ def question_answer_markup(question_id: int, author_id: int):
             [
                 InlineKeyboardButton(
                     text="⛔️ Заблокировать автора",
-                    callback_data=AnswerCallbackData.block_author_callback(author_id),
+                    callback_data=AnswerCallbackData.block_author_callback(question_id),
                 )
             ],
         ]
